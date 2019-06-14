@@ -80,10 +80,10 @@ public class MetodosString {
 			longPala=(int)((Math.random()*4)+4);
 			palabra= new String[longPala];
 			
-			cualChar= (int)(Math.random()*2);
+			cualChar= (int)(Math.random()*2);//dejamos al 50 % de suerte si pone un caracter o vocal
 			for (int i=0; i<longPala; i++) {//generamos la palabra
 				
-				if (cualChar==0) {//dejamos al 50 % de suerte si pone un caracter o vocal
+				if (cualChar==0) {
 					if (i!=(longPala-1)) {//para que no incluya las palabras compuestas al final ejem cr
 					numAlc= (int)(Math.random()*consT.length);
 					palabra[i]= consT[numAlc];
