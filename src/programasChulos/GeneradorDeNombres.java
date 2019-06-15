@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 import MetodosEstaticos.MetodosString;
 public class GeneradorDeNombres {
-
+//ghgfdhfgh
 	public static void main(String[] args) {
 		Scanner teclado = new Scanner(System.in);
 		String palabra,input;

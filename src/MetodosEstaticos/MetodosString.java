@@ -20,7 +20,7 @@ public class MetodosString {
 	public static void main1(/*String[] args*/) {
 		Scanner teclado= new Scanner(System.in);
 		
-		
+		//ghfghfg
 		
 		String aCambiar="HolasoyPabloPabloComoPablo", aSustituir="Pablo", por="Kevin";
 		
