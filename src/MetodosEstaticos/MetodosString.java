@@ -1,40 +1,8 @@
 package MetodosEstaticos;
 
-import java.util.Scanner;
 
 public class MetodosString {
 
-	public static void main(String[] args) {
-		
-		for (int i=0; i<20; i++) {
-		System.out.println(generadorNombresBasico());
-		
-		
-		}
-		
-		
-	}
-	
-	
-	
-	public static void main1(/*String[] args*/) {
-		Scanner teclado= new Scanner(System.in);
-		
-		//ghfghfg
-		
-		String aCambiar="HolasoyPabloPabloComoPablo", aSustituir="Pablo", por="Kevin";
-		
-		System.out.println("Introduce la frase");
-		aCambiar= teclado.nextLine();
-		System.out.println("Introduce la palabra que quieres cambiar");
-		aSustituir= teclado.nextLine();
-		System.out.println("Introduce la palabra por la que quieres cambiarla");
-		por =teclado.nextLine();
-		
-		System.out.println(cambiarPalabraFrase(aCambiar,aSustituir,por));
-
-
-	}
 	/**
 	 * Metodo que desde una frase y la palabra que quieres sustituir y la sustituida te la sustituye
 	 * ejemplo de HolasoyPabloPabloComoPablo, palabra a sustituir es Pablo y se sustituye por Kevin
