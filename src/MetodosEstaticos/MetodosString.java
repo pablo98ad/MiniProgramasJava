@@ -45,7 +45,7 @@ public class MetodosString {
 		boolean req=false,siguVocal;
 		//do {
 			//palabra="";
-			longPala=(int)((Math.random()*4)+4);
+			longPala=(int)((Math.random()*4)+4);//
 			palabra= new String[longPala];
 			
 			cualChar= (int)(Math.random()*2);//dejamos al 50 % de suerte si pone un caracter o vocal

@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>Ficheros/calc.png</name>
+			<type>1</type>
+			<location>F:/Pablo/Escritorio/calc.png</location>
+		</link>
+	</linkedResources>
 </projectDescription>
