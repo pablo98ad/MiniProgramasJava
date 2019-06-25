@@ -4,6 +4,7 @@ public class ObjCalculadora {
 	
 	private String pantalla;
 	private boolean yaOperado=false;
+	private String operadores="+-x/";
 	
 	
 	public ObjCalculadora() {
@@ -15,19 +16,42 @@ public class ObjCalculadora {
 		
 	}
 	
-	public void multiplicar() {
-		if (!this.pantalla.equals("")){
-			if(!yaOperado) {
-				yaOperado=true;
-				pantalla=pantalla+"x";
-			}else {
-				String[] l = pantalla.split("x");
-				pantalla=Double.toString((double)((Integer.parseInt(l[0]))*(Integer.parseInt(l[1]))));
-					
-			}
-		}
+	public void resolver() {
+		
+		
+		
+		
+		
+		//System.out.println();
+		
+		
+		
 		
 	}
+	
+	public void multiplicar() {
+		if (!pantalla.equals("") && pantalla.charAt(pantalla.length()-1)!=operadores.charAt(0)) {
+			if(pantalla.charAt(pantalla.length()-1)!=operadores.charAt(1) && pantalla.charAt(pantalla.length()-1)!=operadores.charAt(2) && pantalla.charAt(pantalla.length()-1)!=operadores.charAt(3)) {
+				this.pantalla= this.pantalla+"x";
+			}
+		}
+	}
+	
+	public void dividir() {
+		if (!pantalla.equals("") && pantalla.charAt(pantalla.length()-1)!=operadores.charAt(0)) {
+			if(pantalla.charAt(pantalla.length()-1)!=operadores.charAt(1) && pantalla.charAt(pantalla.length()-1)!=operadores.charAt(2) && pantalla.charAt(pantalla.length()-1)!=operadores.charAt(3)) {
+				this.pantalla= this.pantalla+"/";
+			}
+		}
+	}
+	
+	public void borrar() {
+		if (!pantalla.equals("")) {
+				this.pantalla= this.pantalla.substring(0,this.pantalla.length()-1);
+			}
+		
+	}
+	
 	
 	public String getPantalla() {
 		return this.pantalla;

@@ -2,39 +2,51 @@ package calculadora;
 
 import java.awt.EventQueue;
 
+import javafx.application.Application;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
+import javafx.stage.Stage;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.Color;
 import javax.swing.SwingConstants;
+import javax.swing.Timer;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.JProgressBar;
+import javax.swing.JSlider;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-public class Calculadora {
+public class Calculadora extends javafx.application.Application{
 
 	private JFrame frame;
+	private static ReproductorMusica mus;
 	private JTextField resultado;
+	private JTextField tiempo;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		 
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Calculadora window = new Calculadora();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	public static void main(String[] args)  {
+		mus = new ReproductorMusica();
+		Application.launch(args);
+	      
+		
 	}
 
+	
+	
 	/**
 	 * Create the application.
 	 */
@@ -45,6 +57,7 @@ public class Calculadora {
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @wbp.parser.entryPoint
 	 */
 	private void initialize() {
 		ObjCalculadora cal= new ObjCalculadora();
@@ -162,12 +175,32 @@ public class Calculadora {
 		nueve.setBounds(120, 180, 41, 33);
 		frame.getContentPane().add(nueve);
 		
+		JButton resolver = new JButton("=");
+		resolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cal.resolver();
+				resultado.setText(cal.getPantalla());
+			}
+		});
+		resolver.setBounds(175, 100, 70, 33);
+		frame.getContentPane().add(resolver);
+		
+		JButton borrar = new JButton("\u03A7");
+		borrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cal.borrar();;
+				resultado.setText(cal.getPantalla());
+			}
+		});
+		borrar.setBounds(175, 140, 70, 33);
+		frame.getContentPane().add(borrar);
+		
 		JButton suma = new JButton("+");
-		suma.setBounds(175, 100, 70, 33);
+		suma.setBounds(30, 220, 41, 33);
 		frame.getContentPane().add(suma);
 		
 		JButton resta = new JButton("-");
-		resta.setBounds(175, 140, 70, 33);
+		resta.setBounds(120, 220, 41, 33);
 		frame.getContentPane().add(resta);
 		
 		JButton multiplicacion = new JButton("x");
@@ -191,7 +224,85 @@ public class Calculadora {
 		frame.getContentPane().add(cero);
 		
 		JButton dividir = new JButton("/");
+		dividir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				cal.dividir();
+				resultado.setText(cal.getPantalla());
+				
+			}
+		});
 		dividir.setBounds(175, 220, 70, 33);
 		frame.getContentPane().add(dividir);
+		
+		JButton pausa = new JButton("||");
+		pausa.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		pausa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				mus.pausa();//pausamos la cancion cuando pulsamos en el boton pausa
+			}
+		});
+		pausa.setBounds(60, 309, 45, 22);
+		frame.getContentPane().add(pausa);
+		
+		JButton reanudar = new JButton("\u25BA");
+		reanudar.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		reanudar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mus.reanudar();//reanudamos la cancion cuando pulsamos en reanudar
+				}
+		});
+		reanudar.setBounds(10, 309, 45, 22);
+		frame.getContentPane().add(reanudar);
+		
+		tiempo = new JTextField();
+		tiempo.setHorizontalAlignment(SwingConstants.CENTER);
+		tiempo.setBounds(115, 310, 41, 20);
+		frame.getContentPane().add(tiempo);
+		tiempo.setColumns(10);
+		
+		JSlider slider = new JSlider();
+		slider.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				mus.ajustarVolumen(slider.getValue());
+				
+			}
+		});
+		slider.setBounds(161, 311, 84, 20);
+		frame.getContentPane().add(slider);
+		
+		Timer timer = new Timer (100, new ActionListener () //hacemos un hilo para que se actualize la duracion de la musica
+		{ 
+		    public void actionPerformed(ActionEvent e) 
+		    { 
+		    	String time= String.format("%.0f",mus.getProgreso());//imprimimos en la etiqueta el tiempo de la cancion
+		        tiempo.setText(time);
+		     } 
+		}); 
+		
+
+		timer.start();
+		
+		
+		
+		
+		
+	}
+
+	@Override
+	public void start(Stage arg0) throws Exception {
+		
+		mus.reproducirInicio();
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Calculadora window = new Calculadora();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
 	}
 }

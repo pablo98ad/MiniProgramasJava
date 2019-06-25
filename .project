@@ -20,5 +20,10 @@
 			<type>1</type>
 			<location>F:/Pablo/Escritorio/calc.png</location>
 		</link>
+		<link>
+			<name>Ficheros/mus2.mp3</name>
+			<type>1</type>
+			<location>C:/Users/Pablo/eclipse-workspace/MetodosPabloAD/Ficheros/mus2.mp3</location>
+		</link>
 	</linkedResources>
 </projectDescription>
