@@ -11,15 +11,19 @@ import javafx.stage.Stage;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.Color;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.JTextField;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.awt.event.ActionEvent;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
@@ -27,6 +31,8 @@ import javax.swing.JProgressBar;
 import javax.swing.JSlider;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 public class Calculadora extends javafx.application.Application{
 
@@ -63,9 +69,11 @@ public class Calculadora extends javafx.application.Application{
 		ObjCalculadora cal= new ObjCalculadora();
 		frame = new JFrame();
 		frame.setResizable(false);
-		frame.setBounds(100, 100, 312, 362);
+		frame.setBounds(100, 100, 312, 390);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		/*ImageIcon img = new ImageIcon("Ficheros/calc.png");
+		frame.setIconImage(img.getImage());*/
 		
 		JLabel lblCalculadoraJava = new JLabel("Calculadora Java");
 		lblCalculadoraJava.setHorizontalAlignment(SwingConstants.CENTER);
@@ -196,10 +204,22 @@ public class Calculadora extends javafx.application.Application{
 		frame.getContentPane().add(borrar);
 		
 		JButton suma = new JButton("+");
+		suma.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cal.sumar();
+				resultado.setText(cal.getPantalla());
+			}
+		});
 		suma.setBounds(30, 220, 41, 33);
 		frame.getContentPane().add(suma);
 		
 		JButton resta = new JButton("-");
+		resta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cal.restar();
+				resultado.setText(cal.getPantalla());
+			}
+		});
 		resta.setBounds(120, 220, 41, 33);
 		frame.getContentPane().add(resta);
 		
@@ -256,36 +276,47 @@ public class Calculadora extends javafx.application.Application{
 		
 		tiempo = new JTextField();
 		tiempo.setHorizontalAlignment(SwingConstants.CENTER);
-		tiempo.setBounds(115, 310, 41, 20);
+		tiempo.setBounds(110, 310, 41, 20);
 		frame.getContentPane().add(tiempo);
 		tiempo.setColumns(10);
 		
 		JSlider slider = new JSlider();
-		slider.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
+		slider.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) {
 				mus.ajustarVolumen(slider.getValue());
-				
 			}
 		});
-		slider.setBounds(161, 311, 84, 20);
+		slider.setBounds(161, 311, 64, 20);
 		frame.getContentPane().add(slider);
+		
+		JSlider slider_1 = new JSlider();
+		slider_1.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				mus.ajustarTiempo(slider_1.getValue());
+			}
+		});
+		slider_1.setBounds(10, 333, 95, 17);
+		frame.getContentPane().add(slider_1);
 		
 		Timer timer = new Timer (100, new ActionListener () //hacemos un hilo para que se actualize la duracion de la musica
 		{ 
 		    public void actionPerformed(ActionEvent e) 
 		    { 
-		    	String time= String.format("%.0f",mus.getProgreso());//imprimimos en la etiqueta el tiempo de la cancion
-		        tiempo.setText(time);
+		    	tiempo.setText(mus.getProgreso());
+		       // System.out.println(mus.getProgreso());
+		        //slider_1.setValue((int) mus.obtenerProgreso());
 		     } 
 		}); 
 		
 
 		timer.start();
 		
-		
-		
-		
+		frame.setTitle("Calculadora by Pablo98ad");
+		try {
+			frame.setIconImage(ImageIO.read(new File("Ficheros/calc.png")));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 		
 	}
 
@@ -305,4 +336,8 @@ public class Calculadora extends javafx.application.Application{
 		});
 		
 	}
+	
+	
+	
+
 }

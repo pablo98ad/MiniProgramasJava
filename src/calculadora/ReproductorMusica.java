@@ -7,7 +7,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 public class ReproductorMusica {
-	String path = "Ficheros/mus2.mp3";
+	String path = "Ficheros/mus1.mp3";
 	Media media;
 	MediaPlayer mediaPlayer;
 	
@@ -34,11 +34,18 @@ public class ReproductorMusica {
         }
         
     }
-	
-	public double getProgreso() {
-		Duration d = this.mediaPlayer.getCurrentTime();
-		
-		return d.toSeconds();
+	/**
+	 * Devuelve un string con el  progreso de la cancion en minutos y segundos reales
+	 * @return
+	 */
+	public String getProgreso() {
+		String time="";
+		double d =  this.mediaPlayer.getCurrentTime().toSeconds();
+		int min,seg;
+		min= (int) (d/60);
+		seg= (int) (d%60);
+		time=String.format("%d:%02d", min,seg);
+		return time;
 				
 		
 	}
@@ -54,10 +61,32 @@ public class ReproductorMusica {
 	public void pausa() {
 		this.mediaPlayer.pause();
 		
+		//System.out.println(obtenerProgreso());
 	}
 	
 	public void reanudar() {
 		this.mediaPlayer.play();
+		
+	}
+	/*
+	public double obtenerProgreso() {
+		int duracionActual= (int)this.mediaPlayer.getCurrentTime().toMillis();
+		int duracionTotal= (int)this.mediaPlayer.getTotalDuration().toMillis();
+		//System.out.println(duracionActual);
+		//System.out.println(duracionTotal);
+		
+		//duracionActual=duracionActual/100;
+		int res=(int)(duracionActual*100)/duracionTotal;
+		return res;
+	}
+	*/
+	public void ajustarTiempo(int t) {
+		int duracionTotal= (int)this.mediaPlayer.getTotalDuration().toMillis();
+		
+		int duracionSeleccionada= (duracionTotal*t)/100;
+		//System.out.println(duracionSeleccionada);
+		Duration dRes = new Duration(duracionSeleccionada);
+		this.mediaPlayer.seek(dRes);
 		
 	}
 }
